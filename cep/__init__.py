@@ -1,5 +1,6 @@
 #- coding: utf-8
 from BeautifulSoup import BeautifulSoup
+from encomenda import EncomendaRepository
 import cookielib
 import re
 import urllib
@@ -9,6 +10,7 @@ URL_CORREIOS = 'http://www.buscacep.correios.com.br/servicos/dnec/'
 
 class Correios():
     def __init__(self, proxy=None):
+	self.encomenda_repository = EncomendaRepository()
         cj = cookielib.LWPCookieJar()
         cookie_handler = urllib2.HTTPCookieProcessor(cj)
         if proxy:
@@ -92,6 +94,9 @@ class Correios():
         }
         html = self._url_open(url, data).read()
         return self._parse_faixa(html)
+
+    def encomenda(self,numero):
+	return self.encomenda_repository.get(numero)   
 
     def consulta(self, endereco, primeiro=False,
                  uf=None, localidade=None, tipo=None, numero=None):

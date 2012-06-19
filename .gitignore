@@ -1,0 +1,5 @@
+build/
+dist/
+cep.egg-info/
+*.swp
+*.pyc
